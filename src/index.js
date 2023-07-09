@@ -8,32 +8,29 @@ import { FilterProvider } from './context/filter_context'
 import { CartProvider } from './context/cart_context'
 import { UserProvider } from './context/user_context'
 import { Auth0Provider, User } from '@auth0/auth0-react'
+import { AuthWrapper } from './pages'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
   <Auth0Provider
-    // domain="dev-pu8wyk-g.us.auth0.com"
-    // clientId="GYsVn60CkUU6fa4yiwpRrT1KVL5KuzPh"
-    // redirectUri={window.location.origin}
-    // cacheLocation="localstorage"
-
-    domain="dev-pu8wyk-g.us.auth0.com"
-    clientId="GYsVn60CkUU6fa4yiwpRrT1KVL5KuzPh"
+    domain={process.env.REACT_APP_AUTH_DOMAIN}
+    clientId={process.env.REACT_APP_AUTH_CLIENT}
     authorizationParams={{
       redirect_uri: window.location.origin,
     }}
-    cacheLocation="localstorage"
   >
-    <UserProvider>
-      <ProductsProvider>
-        <FilterProvider>
-          <CartProvider>
-            <App />
-          </CartProvider>
-        </FilterProvider>
-      </ProductsProvider>
-    </UserProvider>
+    <AuthWrapper>
+      <UserProvider>
+        <ProductsProvider>
+          <FilterProvider>
+            <CartProvider>
+              <App />
+            </CartProvider>
+          </FilterProvider>
+        </ProductsProvider>
+      </UserProvider>
+    </AuthWrapper>
   </Auth0Provider>
 )
 
